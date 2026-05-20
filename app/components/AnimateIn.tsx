@@ -15,11 +15,11 @@ interface Props {
 
 const getInitialStyle = (variant: Variant): React.CSSProperties => {
   switch (variant) {
-    case "up":    return { opacity: 0, transform: "translateY(48px)" };
-    case "down":  return { opacity: 0, transform: "translateY(-32px)" };
-    case "left":  return { opacity: 0, transform: "translateX(-56px)" };
-    case "right": return { opacity: 0, transform: "translateX(56px)" };
-    case "scale": return { opacity: 0, transform: "scale(0.93)" };
+    case "up":    return { opacity: 0, transform: "translateY(72px)" };
+    case "down":  return { opacity: 0, transform: "translateY(-48px)" };
+    case "left":  return { opacity: 0, transform: "translateX(-80px)" };
+    case "right": return { opacity: 0, transform: "translateX(80px)" };
+    case "scale": return { opacity: 0, transform: "scale(0.88)" };
     case "fade":  return { opacity: 0, transform: "none" };
   }
 };
@@ -30,8 +30,8 @@ export default function AnimateIn({
   delay = 0,
   variant = "up",
   mount = false,
-  duration = 400,
-  rootMargin = "0px 0px 50px 0px",
+  duration = 850,
+  rootMargin = "0px 0px -60px 0px",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -52,7 +52,7 @@ export default function AnimateIn({
   }, [mount, delay]);
 
   const initial = getInitialStyle(variant);
-  const easing = "cubic-bezier(0.16,1,0.3,1)";
+  const easing = "cubic-bezier(0.4,0,0.2,1)";
 
   return (
     <div

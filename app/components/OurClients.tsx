@@ -130,7 +130,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
       >
         {/* FRONT */}
         <div
-          className={`absolute inset-0 rounded-[2.5rem] overflow-hidden ${client.cornerColor} group shadow-sm`}
+          className={`absolute inset-0 rounded-[2.5rem] overflow-hidden ${client.cornerColor} group shadow-[0_4px_24px_rgba(0,0,0,0.13)] ring-1 ring-black/10`}
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", opacity: flipped ? 0 : 1, transition: faceTransition } as React.CSSProperties}
         >
           <div className={`relative flex flex-col w-full h-full ${client.bgColor} ${client.cornerClass} overflow-hidden`}>
@@ -158,7 +158,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
 
         {/* BACK */}
         <div
-          className="absolute inset-0 rounded-[2.5rem] overflow-hidden bg-white shadow-sm"
+          className="absolute inset-0 rounded-[2.5rem] overflow-hidden bg-white shadow-[0_4px_24px_rgba(0,0,0,0.13)] ring-1 ring-black/10"
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", opacity: flipped ? 1 : 0, transition: faceTransition } as React.CSSProperties}
         >
           <div
