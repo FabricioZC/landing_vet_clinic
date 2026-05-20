@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useCardHint } from "./useCardHint";
 
 const clients = [
   {
@@ -103,20 +104,26 @@ const clients = [
 ];
 
 
-function ClientCard({ client }: { client: typeof clients[0] }) {
+function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: boolean }) {
   const [flipped, setFlipped] = useState(false);
+  const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, flipped);
 
   return (
     <div
+      ref={cardRef}
       className={`${client.className} relative cursor-pointer`}
       style={{ perspective: "1000px" }}
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
-      onClick={() => setFlipped(!flipped)}
+      onMouseEnter={() => { stopHint(); setFlipped(true); }}
+      onMouseLeave={() => { stopHint(); setFlipped(false); }}
+      onClick={() => { stopHint(); setFlipped(f => !f); }}
     >
       <div
-        className="relative w-full h-full transition-transform duration-700"
-        style={{ transformStyle: "preserve-3d", transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+        ref={innerRef}
+        className={`relative w-full h-full ${hinting ? "card-peek" : "transition-transform duration-700"}`}
+        style={{
+          transformStyle: "preserve-3d",
+          ...(hinting ? {} : { transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }),
+        }}
       >
         {/* FRONT */}
         <div
@@ -148,12 +155,16 @@ function ClientCard({ client }: { client: typeof clients[0] }) {
 
         {/* BACK */}
         <div
-          className="absolute inset-0 rounded-[2.5rem] overflow-hidden bg-white p-5 sm:p-7 flex flex-col justify-between shadow-sm"
+          className="absolute inset-0 rounded-[2.5rem] overflow-hidden bg-white shadow-sm"
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" } as React.CSSProperties}
         >
-          <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">{client.name}</h3>
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{client.review}</p>
+          <div
+            className="h-full overflow-y-auto p-4 sm:p-7 flex flex-col"
+            style={{ touchAction: "pan-y" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-base sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 shrink-0">{client.name}</h3>
+            <p className="text-gray-600 text-xs sm:text-base leading-relaxed">{client.review}</p>
           </div>
         </div>
       </div>
@@ -211,13 +222,22 @@ export default function OurClients() {
         >
           <div className="grid grid-cols-[repeat(6,210px)] sm:grid-cols-[repeat(6,260px)] md:grid-cols-[repeat(6,320px)] grid-rows-[210px_210px] sm:grid-rows-[260px_260px] md:grid-rows-[320px_320px] gap-4 sm:gap-5 md:gap-6 w-max mx-auto md:mx-0">
             {clients.map((client, i) => (
-              <ClientCard key={i} client={client} />
+              <ClientCard key={i} client={client} isHint={i === 0} />
             ))}
           </div>
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar{display:none}`}} />
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar{display:none}
+        @keyframes cardPeek{
+          0%{transform:rotateY(0deg)}
+          30%{transform:rotateY(38deg)}
+          55%{transform:rotateY(38deg)}
+          100%{transform:rotateY(0deg)}
+        }
+        .card-peek{animation:cardPeek 1.0s cubic-bezier(0.4,0,0.2,1) 1 both}
+      `}} />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useCardHint } from "./useCardHint";
 
 const signs = [
   { id: 1, title: 'Convulsions', image: '/images/1c.png', info: 'If your cat experiences sudden seizures or convulsions, contact a vet immediately.' },
@@ -95,8 +96,8 @@ export default function SignsToVet() {
           {/* Cats Cards Carousel — full-bleed, over gray box */}
           <div ref={scrollRef} className="relative z-20 overflow-x-auto hide-scrollbar xl:mt-8 -mx-[44px] md:-mx-16 xl:-mx-36" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="flex gap-4 md:gap-5 snap-x snap-mandatory pb-8 pt-4 px-[44px] md:px-16 xl:px-36">
-              {signs.map((sign) => (
-                <SignCard key={sign.id} sign={sign} />
+              {signs.map((sign, i) => (
+                <SignCard key={sign.id} sign={sign} isHint={i === 0} />
               ))}
             </div>
           </div>
@@ -154,8 +155,8 @@ export default function SignsToVet() {
         {/* Dogs Cards Carousel — full-bleed, over gray box */}
         <div ref={dogScrollRef} className="relative z-20 overflow-x-auto hide-scrollbar -mt-8 -mb-[160px] xl:-mb-[224px] -mx-[44px] md:-mx-16 xl:-mx-36" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className="flex gap-4 md:gap-5 snap-x snap-mandatory py-16 px-[44px] md:px-16 xl:px-36">
-            {dogSigns.map((sign) => (
-              <DogSignCard key={sign.id} sign={sign} />
+            {dogSigns.map((sign, i) => (
+              <DogSignCard key={sign.id} sign={sign} isHint={i === 0} />
             ))}
           </div>
         </div>
@@ -163,28 +164,36 @@ export default function SignsToVet() {
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        @keyframes cardPeek {
+          0%   { transform: rotateY(0deg); }
+          30%  { transform: rotateY(38deg); }
+          55%  { transform: rotateY(38deg); }
+          100% { transform: rotateY(0deg); }
         }
+        .card-peek { animation: cardPeek 1.0s cubic-bezier(0.4,0,0.2,1) 1 both; }
       `}} />
     </div>
   );
 }
 
-function SignCard({ sign }: { sign: typeof signs[0] }) {
+function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, isFlipped);
 
   return (
     <div
+      ref={cardRef}
       className="group w-[260px] md:w-[280px] h-[360px] md:h-[380px] shrink-0 snap-center cursor-pointer relative z-10 hover:z-20"
       style={{ perspective: '1000px' }}
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
-      onClick={() => setIsFlipped(!isFlipped)}
+      onMouseEnter={() => { stopHint(); setIsFlipped(true); }}
+      onMouseLeave={() => { stopHint(); setIsFlipped(false); }}
+      onClick={() => { stopHint(); setIsFlipped(f => !f); }}
     >
       <div
-        className="relative w-full h-full transition-transform duration-700"
-        style={{ transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+        ref={innerRef}
+        className={`relative w-full h-full ${hinting ? "card-peek" : "transition-transform duration-700"}`}
+        style={{ transformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
       >
         {/* Front */}
         <div className="absolute inset-0 bg-[#D48B1B] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
@@ -218,20 +227,23 @@ function SignCard({ sign }: { sign: typeof signs[0] }) {
   );
 }
 
-function DogSignCard({ sign }: { sign: typeof dogSigns[0] }) {
+function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: boolean }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, isFlipped);
 
   return (
     <div
+      ref={cardRef}
       className="group w-[260px] md:w-[280px] h-[360px] md:h-[380px] shrink-0 snap-center cursor-pointer relative z-10 hover:z-20"
       style={{ perspective: '1000px' }}
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
-      onClick={() => setIsFlipped(!isFlipped)}
+      onMouseEnter={() => { stopHint(); setIsFlipped(true); }}
+      onMouseLeave={() => { stopHint(); setIsFlipped(false); }}
+      onClick={() => { stopHint(); setIsFlipped(f => !f); }}
     >
       <div
-        className="relative w-full h-full transition-transform duration-700"
-        style={{ transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+        ref={innerRef}
+        className={`relative w-full h-full ${hinting ? "card-peek" : "transition-transform duration-700"}`}
+        style={{ transformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
       >
         {/* Front */}
         <div className="absolute inset-0 bg-[#67B2D2] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
