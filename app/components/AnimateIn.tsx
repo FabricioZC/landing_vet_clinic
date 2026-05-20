@@ -30,8 +30,8 @@ export default function AnimateIn({
   delay = 0,
   variant = "up",
   mount = false,
-  duration = 300,
-  rootMargin = "0px 0px 120px 0px",
+  duration = 400,
+  rootMargin = "0px 0px 50px 0px",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -45,7 +45,7 @@ export default function AnimateIn({
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.05, rootMargin }
+      { threshold: 0.12, rootMargin }
     );
     observer.observe(el);
     return () => observer.disconnect();
