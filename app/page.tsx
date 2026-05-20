@@ -15,38 +15,38 @@ export default function Home() {
       <Navbar />
 
       {/* Hero + AboutUs together — cat image overlaps AboutUs */}
-      <AnimateIn variant="down" mount duration={900} delay={80}>
+      <AnimateIn variant="down" mount delay={80}>
         <Hero />
         <AboutUs />
       </AnimateIn>
 
       {/* Services: slides in from right */}
-      <AnimateIn variant="right" duration={950}>
+      <AnimateIn variant="right">
         <OurServices />
       </AnimateIn>
 
       {/* Quote: subtle scale + fade */}
-      <AnimateIn variant="scale" duration={800}>
+      <AnimateIn variant="scale">
         <QuoteBanner />
       </AnimateIn>
 
       {/* Clients: big slide up */}
-      <AnimateIn variant="up" duration={1000}>
+      <AnimateIn variant="up">
         <OurClients />
       </AnimateIn>
 
       {/* Signs: slides from left */}
-      <AnimateIn variant="left" duration={950}>
+      <AnimateIn variant="left">
         <SignsToVet />
       </AnimateIn>
 
       {/* Appointment: scale in */}
-      <AnimateIn variant="scale" duration={850} rootMargin="0px 0px -40px 0px">
+      <AnimateIn variant="scale" rootMargin="0px 0px -40px 0px">
         <MakeAppointment />
       </AnimateIn>
 
       {/* Footer: gentle fade */}
-      <AnimateIn variant="fade" duration={700}>
+      <AnimateIn variant="fade">
         <Footer />
       </AnimateIn>
     </main>

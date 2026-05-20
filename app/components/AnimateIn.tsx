@@ -30,8 +30,8 @@ export default function AnimateIn({
   delay = 0,
   variant = "up",
   mount = false,
-  duration = 900,
-  rootMargin = "0px 0px -120px 0px",
+  duration = 400,
+  rootMargin = "0px 0px 50px 0px",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
