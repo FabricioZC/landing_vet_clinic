@@ -113,7 +113,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
   return (
     <div
       ref={cardRef}
-      className={`${client.className} relative cursor-pointer snap-center shrink-0`}
+      className={`${client.className} relative cursor-pointer`}
       style={{ perspective: "1000px" }}
       onPointerEnter={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(true); } }}
       onPointerLeave={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(false); } }}
@@ -217,7 +217,7 @@ export default function OurClients() {
       {/* Grid */}
       <div
         ref={scrollRef}
-        className="overflow-x-auto -mx-5 md:-mx-10 lg:-mx-20 hide-scrollbar snap-x snap-mandatory"
+        className="overflow-x-auto -mx-5 md:-mx-10 lg:-mx-20 hide-scrollbar"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none", overscrollBehavior: "contain auto" }}
       >
         <div className="grid grid-cols-[repeat(6,210px)] sm:grid-cols-[repeat(6,260px)] md:grid-cols-[repeat(6,320px)] grid-rows-[210px_210px] sm:grid-rows-[260px_260px] md:grid-rows-[320px_320px] gap-4 sm:gap-5 md:gap-6 w-max pb-12 pt-4 px-5 md:px-10 lg:px-20">
