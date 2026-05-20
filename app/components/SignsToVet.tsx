@@ -180,13 +180,13 @@ export default function SignsToVet() {
 function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, isFlipped);
-  const faceTransition = 'opacity 0s 0.35s';
+  const faceTransition = 'opacity 0.1s 0.3s';
 
   return (
     <div
       ref={cardRef}
       className="group w-[260px] md:w-[280px] h-[360px] md:h-[380px] shrink-0 snap-center cursor-pointer relative z-10 hover:z-20"
-      style={{ perspective: '1000px', touchAction: 'manipulation' }}
+      style={{ perspective: '1000px' }}
       onPointerEnter={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(true); } }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(false); } }}
       onClick={() => { stopHint(); setIsFlipped(f => !f); }}
@@ -231,13 +231,13 @@ function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean })
 function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: boolean }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, isFlipped);
-  const faceTransition = 'opacity 0s 0.35s';
+  const faceTransition = 'opacity 0.1s 0.3s';
 
   return (
     <div
       ref={cardRef}
       className="group w-[260px] md:w-[280px] h-[360px] md:h-[380px] shrink-0 snap-center cursor-pointer relative z-10 hover:z-20"
-      style={{ perspective: '1000px', touchAction: 'manipulation' }}
+      style={{ perspective: '1000px' }}
       onPointerEnter={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(true); } }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(false); } }}
       onClick={() => { stopHint(); setIsFlipped(f => !f); }}

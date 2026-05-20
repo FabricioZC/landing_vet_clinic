@@ -108,13 +108,13 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
   const [flipped, setFlipped] = useState(false);
   const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, flipped);
 
-  const faceTransition = "opacity 0s 0.35s";
+  const faceTransition = "opacity 0.1s 0.3s";
 
   return (
     <div
       ref={cardRef}
       className={`${client.className} relative cursor-pointer`}
-      style={{ perspective: "1000px", touchAction: "manipulation" }}
+      style={{ perspective: "1000px" }}
       onPointerEnter={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(true); } }}
       onPointerLeave={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(false); } }}
       onClick={() => { stopHint(); setFlipped(f => !f); }}
@@ -164,7 +164,6 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
           <div
             className="h-full overflow-y-auto p-4 sm:p-7 flex flex-col"
             style={{ touchAction: "pan-y" }}
-            onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-base sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 shrink-0">{client.name}</h3>
             <p className="text-gray-600 text-xs sm:text-base leading-relaxed">{client.review}</p>
