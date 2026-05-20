@@ -193,10 +193,10 @@ function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean })
       <div
         ref={innerRef}
         className={`relative w-full h-full ${hinting ? "card-peek" : "transition-transform duration-700"}`}
-        style={{ transformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
+        style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
       >
         {/* Front */}
-        <div className="absolute inset-0 bg-[#D48B1B] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
+        <div className="absolute inset-0 bg-[#D48B1B] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' } as React.CSSProperties}>
           <h3 className="text-xl md:text-2xl font-medium text-white relative z-10">
             {sign.title}
           </h3>
@@ -206,7 +206,7 @@ function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean })
         </div>
 
         {/* Back */}
-        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between shadow-md" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between shadow-md" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' } as React.CSSProperties}>
           <div>
             <h3 className="text-xl md:text-2xl font-medium text-black mb-4">
               {sign.title}
@@ -243,10 +243,10 @@ function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: bool
       <div
         ref={innerRef}
         className={`relative w-full h-full ${hinting ? "card-peek" : "transition-transform duration-700"}`}
-        style={{ transformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
+        style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
       >
         {/* Front */}
-        <div className="absolute inset-0 bg-[#67B2D2] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
+        <div className="absolute inset-0 bg-[#67B2D2] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' } as React.CSSProperties}>
           <h3 className="text-xl md:text-2xl font-medium text-white relative z-10">
             {sign.title}
           </h3>
@@ -256,7 +256,7 @@ function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: bool
         </div>
 
         {/* Back */}
-        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' } as React.CSSProperties}>
           <div>
             <h3 className="text-xl md:text-2xl font-medium text-black mb-4">
               {sign.title}

@@ -122,6 +122,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
         className={`relative w-full h-full ${hinting ? "card-peek" : "transition-transform duration-700"}`}
         style={{
           transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d",
           ...(hinting ? {} : { transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }),
         }}
       >
@@ -131,7 +132,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" } as React.CSSProperties}
         >
           <div className={`relative flex flex-col w-full h-full ${client.bgColor} ${client.cornerClass} overflow-hidden`}>
-            <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col pointer-events-none">
+<div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col pointer-events-none">
               <h3 className="text-white text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 drop-shadow-sm">
                 {client.name}
               </h3>
@@ -230,7 +231,7 @@ export default function OurClients() {
 
       <style dangerouslySetInnerHTML={{__html: `
         .hide-scrollbar::-webkit-scrollbar{display:none}
-        @keyframes cardPeek{
+@keyframes cardPeek{
           0%{transform:rotateY(0deg)}
           30%{transform:rotateY(38deg)}
           55%{transform:rotateY(38deg)}
