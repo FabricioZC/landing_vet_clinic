@@ -11,7 +11,7 @@ import AnimateIn from "./components/AnimateIn";
 
 export default function Home() {
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col overflow-x-hidden">
       <Navbar />
 
       {/* Hero + AboutUs together — cat image overlaps AboutUs */}

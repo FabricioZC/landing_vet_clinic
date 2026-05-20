@@ -113,7 +113,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
   return (
     <div
       ref={cardRef}
-      className={`${client.className} relative cursor-pointer snap-start`}
+      className={`${client.className} relative cursor-pointer`}
       style={{ perspective: "1000px" }}
       onPointerEnter={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(true); } }}
       onPointerLeave={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(false); } }}
@@ -216,17 +216,15 @@ export default function OurClients() {
       </div>
 
       {/* Grid */}
-      <div className="relative">
-        <div
-          ref={scrollRef}
-          className="overflow-x-auto pb-12 pt-4 -mx-5 px-5 md:-mx-10 md:px-10 lg:-mx-20 lg:px-20 hide-scrollbar snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none", overscrollBehavior: "contain auto" }}
-        >
-          <div className="grid grid-cols-[repeat(6,210px)] sm:grid-cols-[repeat(6,260px)] md:grid-cols-[repeat(6,320px)] grid-rows-[210px_210px] sm:grid-rows-[260px_260px] md:grid-rows-[320px_320px] gap-4 sm:gap-5 md:gap-6 w-max mx-auto md:mx-0">
-            {clients.map((client, i) => (
-              <ClientCard key={i} client={client} isHint={i === 0} />
-            ))}
-          </div>
+      <div
+        ref={scrollRef}
+        className="overflow-x-auto -mx-5 md:-mx-10 lg:-mx-20 hide-scrollbar"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none", overscrollBehavior: "contain auto" }}
+      >
+        <div className="grid grid-cols-[repeat(6,210px)] sm:grid-cols-[repeat(6,260px)] md:grid-cols-[repeat(6,320px)] grid-rows-[210px_210px] sm:grid-rows-[260px_260px] md:grid-rows-[320px_320px] gap-4 sm:gap-5 md:gap-6 w-max pb-12 pt-4 px-5 md:px-10 lg:px-20">
+          {clients.map((client, i) => (
+            <ClientCard key={i} client={client} isHint={i === 0} />
+          ))}
         </div>
       </div>
 
