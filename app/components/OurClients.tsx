@@ -108,13 +108,15 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
   const [flipped, setFlipped] = useState(false);
   const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, flipped);
 
+  const faceTransition = "opacity 0s 0.35s";
+
   return (
     <div
       ref={cardRef}
       className={`${client.className} relative cursor-pointer`}
-      style={{ perspective: "1000px" }}
-      onMouseEnter={() => { stopHint(); setFlipped(true); }}
-      onMouseLeave={() => { stopHint(); setFlipped(false); }}
+      style={{ perspective: "1000px", touchAction: "manipulation" }}
+      onPointerEnter={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(true); } }}
+      onPointerLeave={(e) => { if (e.pointerType === "mouse") { stopHint(); setFlipped(false); } }}
       onClick={() => { stopHint(); setFlipped(f => !f); }}
     >
       <div
@@ -129,10 +131,10 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
         {/* FRONT */}
         <div
           className={`absolute inset-0 rounded-[2.5rem] overflow-hidden ${client.cornerColor} group shadow-sm`}
-          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" } as React.CSSProperties}
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", opacity: flipped ? 0 : 1, transition: faceTransition } as React.CSSProperties}
         >
           <div className={`relative flex flex-col w-full h-full ${client.bgColor} ${client.cornerClass} overflow-hidden`}>
-<div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col pointer-events-none">
+            <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col pointer-events-none">
               <h3 className="text-white text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 drop-shadow-sm">
                 {client.name}
               </h3>
@@ -157,7 +159,7 @@ function ClientCard({ client, isHint }: { client: typeof clients[0]; isHint?: bo
         {/* BACK */}
         <div
           className="absolute inset-0 rounded-[2.5rem] overflow-hidden bg-white shadow-sm"
-          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" } as React.CSSProperties}
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", opacity: flipped ? 1 : 0, transition: faceTransition } as React.CSSProperties}
         >
           <div
             className="h-full overflow-y-auto p-4 sm:p-7 flex flex-col"

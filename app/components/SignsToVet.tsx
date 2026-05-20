@@ -180,14 +180,15 @@ export default function SignsToVet() {
 function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, isFlipped);
+  const faceTransition = 'opacity 0s 0.35s';
 
   return (
     <div
       ref={cardRef}
       className="group w-[260px] md:w-[280px] h-[360px] md:h-[380px] shrink-0 snap-center cursor-pointer relative z-10 hover:z-20"
-      style={{ perspective: '1000px' }}
-      onMouseEnter={() => { stopHint(); setIsFlipped(true); }}
-      onMouseLeave={() => { stopHint(); setIsFlipped(false); }}
+      style={{ perspective: '1000px', touchAction: 'manipulation' }}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(true); } }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(false); } }}
       onClick={() => { stopHint(); setIsFlipped(f => !f); }}
     >
       <div
@@ -196,7 +197,7 @@ function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean })
         style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
       >
         {/* Front */}
-        <div className="absolute inset-0 bg-[#D48B1B] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' } as React.CSSProperties}>
+        <div className="absolute inset-0 bg-[#D48B1B] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', opacity: isFlipped ? 0 : 1, transition: faceTransition } as React.CSSProperties}>
           <h3 className="text-xl md:text-2xl font-medium text-white relative z-10">
             {sign.title}
           </h3>
@@ -206,7 +207,7 @@ function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean })
         </div>
 
         {/* Back */}
-        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between shadow-md" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' } as React.CSSProperties}>
+        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between shadow-md" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)', opacity: isFlipped ? 1 : 0, transition: faceTransition } as React.CSSProperties}>
           <div>
             <h3 className="text-xl md:text-2xl font-medium text-black mb-4">
               {sign.title}
@@ -230,14 +231,15 @@ function SignCard({ sign, isHint }: { sign: typeof signs[0]; isHint?: boolean })
 function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: boolean }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const { hinting, cardRef, innerRef, stopHint } = useCardHint(!!isHint, isFlipped);
+  const faceTransition = 'opacity 0s 0.35s';
 
   return (
     <div
       ref={cardRef}
       className="group w-[260px] md:w-[280px] h-[360px] md:h-[380px] shrink-0 snap-center cursor-pointer relative z-10 hover:z-20"
-      style={{ perspective: '1000px' }}
-      onMouseEnter={() => { stopHint(); setIsFlipped(true); }}
-      onMouseLeave={() => { stopHint(); setIsFlipped(false); }}
+      style={{ perspective: '1000px', touchAction: 'manipulation' }}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(true); } }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') { stopHint(); setIsFlipped(false); } }}
       onClick={() => { stopHint(); setIsFlipped(f => !f); }}
     >
       <div
@@ -246,7 +248,7 @@ function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: bool
         style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d', ...(hinting ? {} : { transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }) }}
       >
         {/* Front */}
-        <div className="absolute inset-0 bg-[#67B2D2] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' } as React.CSSProperties}>
+        <div className="absolute inset-0 bg-[#67B2D2] rounded-[30px] p-6 md:p-8 overflow-hidden" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', opacity: isFlipped ? 0 : 1, transition: faceTransition } as React.CSSProperties}>
           <h3 className="text-xl md:text-2xl font-medium text-white relative z-10">
             {sign.title}
           </h3>
@@ -256,7 +258,7 @@ function DogSignCard({ sign, isHint }: { sign: typeof dogSigns[0]; isHint?: bool
         </div>
 
         {/* Back */}
-        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' } as React.CSSProperties}>
+        <div className="absolute inset-0 bg-white rounded-[30px] p-6 md:p-8 flex flex-col justify-between" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)', opacity: isFlipped ? 1 : 0, transition: faceTransition } as React.CSSProperties}>
           <div>
             <h3 className="text-xl md:text-2xl font-medium text-black mb-4">
               {sign.title}
